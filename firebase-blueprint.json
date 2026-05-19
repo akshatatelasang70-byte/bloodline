@@ -1,0 +1,83 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Base user profile for auth and role management",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["donor", "hospital", "admin"] },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Donor": {
+      "title": "Donor Details",
+      "description": "Extended profile for donors",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "bloodGroup": { "type": "string", "enum": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"] },
+        "phone": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "lastDonationDate": { "type": "string", "format": "date" },
+        "available": { "type": "boolean" },
+        "isApproved": { "type": "boolean" }
+      },
+      "required": ["userId", "name", "bloodGroup", "city"]
+    },
+    "BloodRequest": {
+      "title": "Blood Request",
+      "description": "Emergency or planned blood requests",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "requesterId": { "type": "string" },
+        "hospitalName": { "type": "string" },
+        "bloodGroup": { "type": "string", "enum": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"] },
+        "unitsNeeded": { "type": "number" },
+        "urgency": { "type": "string", "enum": ["Normal", "High", "Critical"] },
+        "contactName": { "type": "string" },
+        "contactPhone": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Fulfilled", "Cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["requesterId", "hospitalName", "bloodGroup", "unitsNeeded", "urgency"]
+    },
+    "Inventory": {
+      "title": "Blood Inventory",
+      "description": "Track available units per blood group",
+      "type": "object",
+      "properties": {
+        "bloodGroup": { "type": "string" },
+        "units": { "type": "number" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      },
+      "required": ["bloodGroup", "units"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "App users"
+    },
+    "/donors/{donorId}": {
+      "schema": "Donor",
+      "description": "Donor registry"
+    },
+    "/requests/{requestId}": {
+      "schema": "BloodRequest",
+      "description": "Blood requests"
+    },
+    "/inventory/{bloodGroup}": {
+      "schema": "Inventory",
+      "description": "Global inventory stats"
+    }
+  }
+}

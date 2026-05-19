@@ -1,0 +1,6 @@
+{
+  "name": "BloodLine",
+  "description": "A comprehensive Blood Donation Management System connecting donors, hospitals, and patients in emergencies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
